@@ -11,6 +11,7 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
+
 // These headers will allow Cross-Origin Resource Sharing (CORS).
 // This code allows this server to talk to websites that
 // are on different domains, for instance, your chat client.
@@ -94,35 +95,35 @@ exports.defaultCorsHeaders = defaultCorsHeaders;
 
 
 
-// var http = require("http"),
-// var url = require("url"),
-// var fs = require("fs"),
 
-// var url = url.parse(request.url).pathname;
-//   //console.log(response);
+// var http = require('http');
 
+// http.createServer(function(request, response) {
 
-//   fs.exists(filename, function(exists) {
-//     if(!exists) {
-//       response.writeHead(404, {"Content-Type": "text/plain"});
-//       response.write("404 Not Found\n");
-//       response.end();
-//       return;
-//     }
+//   var headers = request.headers;
+//   var method = request.method;
+//   var url = request.url;
+//   var body = [];
+//   request.on('error', function(err) {
+//     console.error(err);
+//   }).on('data', function(chunk) {
+//     body.push(chunk);
+//   }).on('end', function() {
+//     body = Buffer.concat(body).toString();
 
-//     if (fs.statSync(filename).isDirectory()) filename += '/index.html';
+//     // BEGINNING OF NEW STUFF
 
-//     fs.readFile(filename, "binary", function(err, file) {
-//       if(err) {
-//         response.writeHead(500, {"Content-Type": "text/plain"});
-//         response.write(err + "\n");
-//         response.end();
-//         return;
-//       }
-
-//       response.writeHead(200);
-//       response.write(file, "binary");
-//       response.end();
+//     response.on('error', function(err) {
+//       console.error(err);
 //     });
-//   });
-// }).listen(parseInt(port, 10));
+
+//     // response.writeHead(200, {'Content-Type': 'application/json'})
+
+//     var responseBody = {
+//       headers: headers,
+//       method: method,
+//       url: url,
+//       body: body
+//     };
+//
+//     // response.end(JSON.stringify(responseBody))
