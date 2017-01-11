@@ -33,6 +33,14 @@ describe('server', function() {
     });
   });
 
+  it('should send an object containing a `rooms` array', function(done) {
+    request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
+      var parsedBody = JSON.parse(body);
+      expect(parsedBody.rooms).to.be.an('array');
+      done();
+    });
+  });
+
   it('should accept POST requests to /classes/messages', function(done) {
     var requestParams = {method: 'POST',
       uri: 'http://127.0.0.1:3000/classes/messages',
@@ -43,6 +51,14 @@ describe('server', function() {
 
     request(requestParams, function(error, response, body) {
       expect(response.statusCode).to.equal(201);
+      done();
+    });
+  });
+
+  it('should add an objectId to the messageObject and send back that message', function(done) {
+    request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
+      var parsedBody = JSON.parse(body);
+      expect(parsedBody.results[0].objectId).to.not.equal(undefined);
       done();
     });
   });
@@ -63,6 +79,14 @@ describe('server', function() {
         expect(messages[0].message).to.equal('Do my bidding!');
         done();
       });
+    });
+  });
+
+  it('should expect each message to have a unique objectId', function(done) {
+    request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
+      var parsedBody = JSON.parse(body);
+      expect(parsedBody.results[0].objectId).to.not.equal(parsedBody.results[1].objectId);
+      done();
     });
   });
 
